@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Developement on Casper</title>
+    <style>
+  body{
+      background-color: black;
+      color: aliceblue;
+      padding: 3%;
+      text-align: left;
+      font-size: 25px;
+      text-size-adjust: 40px;
+  } 
+  a:hover, a:active 
+  a{
+  background-color: rgb(39, 125, 187);
+  size: 48px;
+  text-size-adjust: 48px;
+  } 
+h1{
+    color: rgb(16, 199, 120);
+}  
+h2{
+    color: rgb(17, 203, 236);
+
+}
+h4{
+    color: rgb(17, 203, 236);
+}
+
+    </style>
+</head>
+<body>
+    <h1 id="developement-on-casper">Developement on Casper</h1>
+    <p>This guide is designed to support developers getting started with the development of smart contracts on the Casper blockchain in AssemblyScript or Rust. For Rust, there is a contract development kit that includes a runtime environment, reference documentation, and test framework. You can install our environment locally, create and test Smart Contracts with our Smart Contracts and Test Libraries, and use these libraries to build your own applications.</p>
+    <p>It is recommended you have prior knowledge about Unix-based operating systems, like GNU/Linux or macOS, and programming knowledge with:</p>
+    <ul>
+    <li><h2 id="rust">Rust</h2>
+    </li>
+    <li><h2 id="assemblyscript">AssemblyScript</h2>
+    </li>
+    <li><h2 id="javascript-optional-">JavaScript (optional)</h2>
+    </li>
+    <li><h2 id="python-optional-">Python (optional)</h2>
+    </li>
+    </ul>
+    <p>The topics on the index include present and future documentation initiatives in our roadmap and are organized so that you will be able to:</p>
+    <ul>
+    <li>Understand more about the Casper Network</li>
+    <li>Learn how to build and operate applications on the platform</li>
+    <li>Learn how to set up a Casper Network locally</li>
+    <li>Work with the contracts API to access the network&#39;s Rust resources</li>
+    <li>Learn how to create and test smart contracts using available libraries</li>
+    <li>Work with the multi-signature capability to sign transactions</li>
+    </ul>
+    <h1 id="getting-started">Getting Started</h1>
+    <p>This guide covers the basic tools you will need to set up your first Casper smart contract. You will also be able to build a sample smart contract and run a few basic tests on it on your local machine.</p>
+    <p>Casper&#39;s blockchain is built upon the Rust programming language and compiles down to WebAssembly. The Rust contract SDK is the easiest way to get started with smart contract development. This guide will walk you through the steps to set up your development environment and build your first contract.</p>
+    <p>Refer to our <a href="../faq/faq-developer.md">FAQ guide</a> if you have questions or need help.</p>
+    <h2 id="video-tutorial">Video Tutorial</h2>
+    <p>For a video walkthrough of this guide, feel free to check out this quick-start video.</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed?v=XvV02iBoctc&list=PL8oWxbJ-csEogSV-M0IPiofWP5I_dLji6&index=2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+    <h2 id="prerequisites">Prerequisites</h2>
+    <h3 id="installing-rust">Installing Rust</h3>
+    <p>Install the <a href="https://www.rust-lang.org">Rust programming language</a> if you don&#39;t already have it on your computer.</p>
+    <p>The <a href="https://www.rust-lang.org/tools/install">official Rust guide</a> recommends installing Rust by using <code>curl</code>:</p>
+    <pre><code class="lang-bash">curl --proto <span class="hljs-string">'=https'</span> --tlsv1.<span class="hljs-number">2</span> -sSf http<span class="hljs-variable">s:</span>//<span class="hljs-keyword">sh</span>.rustup.rs | <span class="hljs-keyword">sh</span>
+    </code></pre>
+    <p>You can also use <code>brew</code> on MacOS or <code>apt</code> on Linux to install Rust.</p>
+    <p>Once you finish installing Rust, check your version:</p>
+    <pre><code class="lang-bash">rustup <span class="hljs-comment">--version</span>
+    </code></pre>
+    <p>Your terminal output should resemble something like the following (note: at the time of the writing of this tutorial, the latest version of Rust was 1.57.0 and may differ for you):</p>
+    <pre><code class="lang-bash">$ rustup --<span class="hljs-keyword">version</span>
+    rustup <span class="hljs-number">1.24</span>.3 (ce5817a94 <span class="hljs-number">2021</span>-<span class="hljs-number">0</span>5-<span class="hljs-number">31</span>)
+    info: This <span class="hljs-keyword">is</span> the <span class="hljs-keyword">version</span> <span class="hljs-keyword">for</span> the rustup toolchain manager, not the rustc compiler.
+    info: The currently active <span class="hljs-string">`rustc`</span> <span class="hljs-keyword">version</span> <span class="hljs-keyword">is</span> <span class="hljs-string">`rustc 1.57.0 (f1edd0429 2021-11-29)`</span>.
+    </code></pre>
+    <p><strong>Casper Rust Packages</strong></p>
+    <p>We publish three crates on <a href="https://crates.io/">crates.io</a> to support smart contract development with Rust:</p>
+    <ul>
+    <li><a href="https://crates.io/crates/casper-contract">Casper Contract</a> - a library supporting communication with the blockchain. This is the main library you will need to write smart contracts.</li>
+    <li><a href="https://crates.io/crates/casper-engine-test-support">Casper Test Support</a> - an in-memory virtual machine against which you can test your smart contracts.</li>
+    <li><a href="https://crates.io/crates/casper-types">Casper Types</a> - a library with types we use across the Rust ecosystem.</li>
+    </ul>
+    <p>A crate is a compilation unit, which can be compiled into a binary or a library.</p>
+    <p><strong>API Documentation for Smart Contracts</strong></p>
+    <p>Each of the Casper crates comes with API documentation and examples for each function, located at <a href="https://docs.rs/releases/search?query=casper">https://docs.rs</a>. The contract API documentation is specific for a given version. For example, you can find documentation for version <strong>0.7.6</strong> at <a href="https://docs.rs/casper-contract/0.7.6">https://docs.rs/casper-contract/0.7.6</a>.</p>
+    <h3 id="installing-dependencies">Installing Dependencies</h3>
+    <p><strong>1. CMake</strong></p>
+    <p>CMake is a popular build tool that we will utilize, and you may very well have it already installed. If you do, make sure that you have the latest version. If you need to install or upgrade it, follow the steps located here: <a href="https://cmake.org/install/">https://cmake.org/install/</a>. Once installed, check your version as shown below.</p>
+    <pre><code class="lang-bash">$ cmake <span class="hljs-comment">--version</span>
+    cmake <span class="hljs-built_in">version</span> <span class="hljs-number">3.20</span><span class="hljs-number">.0</span>
+    
+    CMake suite maintained <span class="hljs-keyword">and</span> supported <span class="hljs-keyword">by</span> Kitware (kitware.com/cmake).
+    </code></pre>
+    <h2 id="development-environment-setup">Development Environment Setup</h2>
+    <h3 id="installing-the-casper-crates">Installing the Casper Crates</h3>
+    <p>The best and fastest way to set up a Casper Rust Smart Contract project is to use <code>cargo-casper</code>. When you use this, it will set the project up with a simple contract, a runtime environment and a testing framework with a simple test. <em>Cargo</em> is a build system and package manager for Rust (much like <em>pip</em> if you are familiar with Python). It is possible to use this configuration in your CI/CD pipeline as well.</p>
+    <pre><code class="lang-bash">cargo <span class="hljs-keyword">install</span> cargo-casper
+    </code></pre>
+    <p>If you run into any issues with this command and you have not recently installed Rust from scratch, please make sure to update your Rust version with this command:</p>
+    <pre><code class="lang-bash"><span class="hljs-attribute">rustup update</span>
+    </code></pre>
+    <h3 id="creating-a-project">Creating a Project</h3>
+    <p>You can create a new sample project very easily with the Casper crate. For example, let&#39;s say that I want to create a project named <strong>my-project</strong> for this tutorial (you can choose a different name if you wish), then I can simply run the command:</p>
+    <pre><code class="lang-bash">cargo casper <span class="hljs-keyword">my</span>-project
+    </code></pre>
+    <p>If you look inside the newly-created <em>my-project</em> folder, you will find two crates: <code>contract</code> and <code>tests</code>. This is a complete basic smart contract that saves a value, passed as an argument, on the blockchain. The <code>tests</code> crate provides a runtime environment of the Casper virtual machine, and a basic smart contract test.</p>
+    <h3 id="compiling-to-wasm">Compiling to WASM</h3>
+    <p>The Casper blockchain uses WebAssembly (WASM) in its runtime environment. Compilation targets for WASM are available for Rust, giving developers access to all the Rust ecosystem tools when developing smart contracts.</p>
+    <ul>
+    <li>Note: WASM allows for the use of other languages, including but not limited to: C/C++, C#, Go, Julia, Lobster and ZIG.</li>
+    </ul>
+    <p>To compile the smart contract into WASM, go into the <em>my-project</em> folder, and run the following commands:</p>
+    <pre><code class="lang-bash"><span class="hljs-keyword">cd</span> my-project
+    <span class="hljs-keyword">make</span> prepare
+    <span class="hljs-keyword">make</span> build-contract
+    </code></pre>
+    <p>Inside the <em>contract</em> folder, you will now see a <em>target</em> folder that contains the compiled smart contract named <em>contract.wasm</em> at <code>my-project/contract/target/wasm32-unknown-unknown/release/contract.wasm</code>.</p>
+    <p><strong>Linting</strong></p>
+    <p>Casper contracts support Rust tooling such as <code>clippy</code> for linting contracts. Feel free to use them! You can also use the <code>make check-lint</code> command for linting your contract. Run this command inside the <em>my-project</em> folder:</p>
+    <pre><code class="lang-bash"><span class="hljs-attribute">make check-lint</span>
+    </code></pre>
+    <h3 id="test-the-contract">Test the Contract</h3>
+    <p>In addition to creating the contract, the Casper crate also automatically created sample tests in the <em>my-project/tests</em> folder.</p>
+    <p>The Casper local environment provides an in-memory virtual machine against which you can run your contract for testing. When you run the test crate, it will automatically build the smart contract in release mode and then run a series of tests against it in the Casper runtime environment. The custom build script is named <em>build.rs</em> if you are interested in looking more into it.</p>
+    <p>:::note</p>
+    <p>Since the test script automatically builds the contract, during development you only need to run the command <code>make test</code> without the need for <code>make build-contract</code>.</p>
+    <p>:::</p>
+    <p>A successful test run indicates that your smart contract environment is set up correctly.</p>
+    <pre><code class="lang-bash">make <span class="hljs-built_in">test</span>
+    </code></pre>
+    <p>After the compilation finishes, the test should run and you should see output similar to this message in your terminal:</p>
+    <pre><code class="lang-bash">running 2 tests
+    <span class="hljs-keyword">test test</span>s::should_error_on_missing_runtime_arg ... ok
+    <span class="hljs-keyword">test test</span>s::should_store_hello_world ... ok
+    
+    <span class="hljs-keyword">test </span>result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+    </code></pre>
+    <p>As a brief example, open up <em>my-project/contract/src/main.rs</em> in your editor, modify the _KEY<em>NAME</em> value in the contract, and then rerun the <code>make test</code> command. You should observe that the smart contract recompiles and the test fails now.</p>
+    <h2 id="rust-resources">Rust Resources</h2>
+    <p>These Rust resources are excellent and we highly recommend them:</p>
+    
+    <a href="https://docs.casperlabs.io/dapp-dev-guide/" target="_blank">MORE ABOUT DEVELOPEMENT ON CASPER NETWORK</a>
+
+</body>
+</html>

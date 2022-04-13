@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staking on CASPER Network</title>
+    <style>
+  body{
+      background-color: black;
+      color: aliceblue;
+      padding: 3%;
+      font-size: 25px;
+      text-align: left;
+      text-size-adjust: 40px;
+  } 
+  h1{
+    color: rgb(16, 199, 120);
+}  
+h2{
+    color: rgb(17, 203, 236);
+
+}
+  a:hover, a:active 
+  a{
+  background-color: rgb(39, 125, 187);
+  font-size: 1cm;
+  text-size-adjust: 48px;
+  }          
+    </style>
+</head>
+<body>
+    <h1 id="staking">Staking</h1>
+   
+<p>A feature of Proof-of-Stake protocols is that token holders can actively participate in the protocol through a mechanism known as <strong>staking</strong>.</p>
+<p>Persons that hold their private keys can choose to stake their tokens with any validator in the Casper Network. Alternatively, it is possible to stake tokens via an exchange or custody provider as well.</p>
+<p>This guide will outline the steps required to stake the CSPR token on the Casper Network.</p>
+<h2 id="what-you-need-to-know-before-staking-what-you-need-to-know-before-staking-">What you need to know before staking </h2>
+<p>Please read the following sections carefully before staking tokens on the Casper Network.</p>
+<h2 id="slashing-slashing-">Slashing </h2>
+<p>Presently Casper does not slash for equivocations. If a node equivocates, its&#39; messages are ignored by the rest of the validators for the balance of the era and made inactive. A node running the software provided by the Casper Association will terminate once it detects that it has equivocated. Future work includes locking an equivocating validator&#39;s stake for an extended duration of time, effectively penalizing the validator.</p>
+<p>Casper does not treat validator stake differently than delegator stake for security reasons.</p>
+<h2 id="delegation-rate-delegation-rate-">Delegation Rate </h2>
+<p>Node operators (Validators) define a commission that they take in exchange for providing staking services. This commission is represented as a percentage of the rewards that the node operator retains for their services.</p>
+<h2 id="rewards-rewards-">Rewards </h2>
+<p>Validators receive rewards for participating in consensus by voting on blocks sending finality signatures (finalizing blocks). There is no precise <em>per-block</em> reward. Rewards are split proportionally among stakes within an era. If a validator is offline or cannot vote on many blocks, the rewards earned are also reduced. Delegators can only receive a proportional amount of the validator&#39;s rewards minus the validator&#39;s commission (Delegation Rate).</p>
+<p>Rewards are distributed at the end of each era.</p>
+<h2 id="selecting-a-node-for-staking-selecting-a-node-for-staking-">Selecting a node for Staking </h2>
+<p>As a prospective delegator, it is important to select a validating node that you can trust. Please do your due diligence before you stake your tokens with a validator.</p>
+<h2 id="check-in-on-your-stake-check-in-on-your-stake-">Check in on your Stake </h2>
+<p>It&#39;s recommended that you check in on how your stake is performing from time to time. If the validator you staked with decides to unbond, your stake will also be unbonded. Make sure that the validator you have selected is performing as per your expectations.</p>
+<p>Validators have to win a staking auction by competing with prospective and current validators for a slot. This process is permissionless, meaning validators can join and leave the auction without restrictions, except the unbonding wait period.</p>
+<h2 id="unbonding-period-unbonding-period-">Unbonding Period </h2>
+<p>For security purposes, whenever a token is un-staked or un-delegated, the protocol will continue to keep the token locked for 14 hours.</p>
+
+    <a href="https://docs.casperlabs.io/staking/" target="_blank">MORE ABOUT THIS ON DOCS</a>
+
+</body>
+</html>

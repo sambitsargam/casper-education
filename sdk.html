@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASPER Network</title>
+    <style>
+  body{
+      background-color: black;
+      color: aliceblue;
+      padding: 3%;
+      text-align: left;
+      font-size: 25px;
+      text-size-adjust: 40px;
+  } 
+  a:hover, a:active 
+  a{
+  background-color: rgb(39, 125, 187);
+  size: 48px;
+  text-size-adjust: 48px;
+  } 
+h1{
+    color: rgb(16, 199, 120);
+}  
+h2{
+    color: rgb(17, 203, 236);
+
+}
+h4{
+    color: rgb(17, 203, 236);
+}
+
+    </style>
+</head>
+<body>
+    <h1 id="introduction">Introduction</h1>
+    <p>This document outlines the methods, endpoints, and types available to developers crafting an SDK for use with Casper networks. The separation of these methods pertains to their use and potential necessity for specific forms of SDK. While a full-featured SDK may feature all methods, there are use cases for SDKs that are purely transactional or informational.</p>
+    <p>For examples of completed SDKs, please refer to our <a href="https://casper.network/docs/sdk">SDK Client Libraries</a> section.</p>
+    <p>You can find information on our serialization standard <a href="https://casper.network/docs/design/serialization-standard/">here</a>.</p>
+    <table>
+    <thead>
+    <tr>
+    <th>Page</th>
+    <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td><a href="../sdkspec/json-rpc-transactional.md">Transactional JSON-RPC Method</a></td>
+    <td>Description of <code>account_put_deploy</code>, the only means by which users can send their compiled WASM (as part of a Deploy) to a node on a Casper network.</td>
+    </tr>
+    <tr>
+    <td><a href="../sdkspec/json-rpc-informational.md">Informational JSON-RPC Methods</a></td>
+    <td>Descriptions of methods that return information from a network or node within a network.</td>
+    </tr>
+    <tr>
+    <td><a href="../sdkspec/json-rpc-pos.md">Proof-of-Stake</a></td>
+    <td>Descriptions of methods that pertain to Proof-of-Stake functionality on a Casper network.</td>
+    </tr>
+    <tr>
+    <td><a href="../sdkspec/types_chain.md">Types</a></td>
+    <td>Information on types used within JSON-RPC methods.</td>
+    </tr>
+    <tr>
+    <td><a href="../sdkspec/types_cl.md">CL Types</a></td>
+    <td>Information specifically relating to CL Types.</td>
+    </tr>
+    </tbody>
+    </table>
+    <h1 id="sdk-client-libraries">SDK Client Libraries</h1>
+    <p>This section covers the software development kits (SDKs) available for interacting with the Casper blockchain. These SDKs are client-side libraries providing functions or methods (depending on the language) to interact with the Casper Network. You can use them as a model to develop your application and accomplish tasks such as generating account keys, sending transfers, or other blockchain transactions.</p>
+    <p>The following table provides links to the SDK documentation, in addition to the corresponding GitHub repositories and pertinent contact information.</p>
+    <table>
+    <thead>
+    <tr>
+    <th>SDK Documentation</th>
+    <th>GitHub Location</th>
+    <th>Maintainer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td><a href="./script-sdk.md">TypeScript</a></td>
+    <td><a href="https://github.com/casper-ecosystem/casper-js-sdk/">Casper-js-sdk</a></td>
+    <td><a href="mailto:jan@hfmn.pl">Jan Hoffman</a></td>
+    </tr>
+    <tr>
+    <td>Java SDK</td>
+    <td><a href="https://github.com/casper-network/casper-java-sdk/">Casper-java-sdk</a></td>
+    <td><a href="mailto:carl.norburn@gmail.com">Carl Norburn</a></td>
+    </tr>
+    <tr>
+    <td><a href="/dapp-dev-guide/sdk/csharp-sdk">C# SDK</a></td>
+    <td><a href="https://github.com/make-software/casper-net-sdk">Casper-net-sdk</a></td>
+    <td>David Hernando, Ihor Burlachenko, Muhammet Kara, Michael Steuer</td>
+    </tr>
+    <tr>
+    <td><a href="/dapp-dev-guide/sdk/go-sdk">Golang SDK</a></td>
+    <td><a href="https://github.com/casper-ecosystem/casper-golang-sdk/">Casper-golang-sdk</a></td>
+    <td><a href="mailto:yar.panasenko@gmail.com">Yaroslav Panasenko</a></td>
+    </tr>
+    <tr>
+    <td><a href="/dapp-dev-guide/sdk/python-sdk">Python SDK</a></td>
+    <td><a href="https://github.com/casper-network/casper-python-sdk/">Casper-python-sdk</a></td>
+    <td><a href="mailto:mark@casper.network">Mark A. Greenslade</a></td>
+    </tr>
+    <tr>
+    <td>Java SDK by SyntiFi</td>
+    <td><a href="https://github.com/syntifi/casper-sdk">Casper-sdk</a></td>
+    <td><a href="mailto:remo@syntifi.com">Remo Stieger</a>/<a href="mailto:andre@syntifi.com">Andre Bertolace</a></td>
+    </tr>
+    <tr>
+    <td>PHP SDK</td>
+    <td><a href="https://github.com/make-software/casper-php-sdk">Casper-php-sdk</a></td>
+    <td>Roman Bylbas, Ihor Burlachenko, Michael Steuer</td>
+    </tr>
+    <tr>
+    <td>Erlang SDK</td>
+    <td>In Development</td>
+    <td>Robert Carbone (Telegram: <a href="https://t.me/ophiucan">@ophiucan</a>)</td>
+    </tr>
+    </tbody>
+    </table>
+    
+    <a href="https://docs.casperlabs.io/dapp-dev-guide/sdkspec/introduction/" target="_blank">MORE ABOUT CASPER SDK</a>
+
+</body>
+</html>
