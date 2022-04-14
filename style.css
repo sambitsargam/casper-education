@@ -1,4 +1,4 @@
-/* Googlefont Poppins CDN Link */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
   margin: 0;
@@ -610,6 +610,27 @@ background-size:100%;
 }
 100% {
   left: 100%;
+}
+}
+
+/* 768 for tablet - desktop - 992 for desktop */
+@media screen and (min-width:768px) {
+ /* hide navigation */
+    .header-nav {
+    display: none;
+}
+/* Hide header button */
+.header-actions {
+    display: none;
+}
+/* show burger */
+.header-burger {
+  display: flex;
+}
+/* Show overlay mobile menu */
+.header--menu-open .header-menu {
+opacity: 1;
+visibility: visible;
 }
 }
 
