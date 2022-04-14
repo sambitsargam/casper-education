@@ -1,49 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract Writing and Deployment on Casper</title>
     <style>
-  body{
-      background-color: black;
-      color: aliceblue;
-      padding: 3%;
-      text-align: left;
-      font-size: 25px;
-      text-size-adjust: 40px;
-  } 
-  a:hover, a:active 
-  a{
-  background-color: rgb(39, 125, 187);
-  size: 48px;
-  text-size-adjust: 48px;
-  } 
-h1{
-    color: rgb(16, 199, 120);
-}  
-h2{
-    color: rgb(17, 203, 236);
-
-}
-h4{
-    color: rgb(17, 203, 236);
-}
-
+      body {
+        background-color: black;
+        color: aliceblue;
+        padding: 3%;
+        text-align: left;
+        font-size: 25px;
+        text-size-adjust: 40px;
+      }
+      button {
+        display: block;
+        color: #fff;
+        text-align: center;
+        background: linear-gradient(to right, #ff416c, #ff4b2b);
+        margin-top: 30px;
+        text-decoration: none;
+        padding: 15px 50px;
+      }
+      a:hover,
+      a:active a {
+        background-color: rgb(39, 125, 187);
+        size: 48px;
+        text-size-adjust: 48px;
+      }
+      h1 {
+        color: rgb(16, 199, 120);
+      }
+      h2 {
+        color: rgb(17, 203, 236);
+      }
+      h4 {
+        color: rgb(17, 203, 236);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1 id="rust">Rust</h1>
-    <p>This section explains step by step how to write a new smart contract on Casper. Start with <code>main.rs</code> from the previous section.</p>
+    <p>
+      This section explains step by step how to write a new smart contract on
+      Casper. Start with <code>main.rs</code> from the previous section.
+    </p>
     <h2 id="a-basic-smart-contract-in-rust">A Basic Smart Contract in Rust</h2>
-    <p>The Casper VM executes a smart contract by calling the <code>call</code> function specified in the contract. If the function is missing, the smart contract is not valid. The simplest possible example is an empty <code>call</code> function.</p>
+    <p>
+      The Casper VM executes a smart contract by calling the
+      <code>call</code> function specified in the contract. If the function is
+      missing, the smart contract is not valid. The simplest possible example is
+      an empty <code>call</code> function.
+    </p>
     <pre><code class="lang-rust"><span class="hljs-meta">#[no_mangle]</span>
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">"C"</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">call</span></span>() {}
     </code></pre>
-    <p>The <code>#[no_mangle]</code> attribute prevents the compiler from changing (mangling) the function name when converting to the binary format of Wasm. Without it, the VM exits with the error message: <code>Module doesn&#39;t have export call</code>.</p>
+    <p>
+      The <code>#[no_mangle]</code> attribute prevents the compiler from
+      changing (mangling) the function name when converting to the binary format
+      of Wasm. Without it, the VM exits with the error message:
+      <code>Module doesn&#39;t have export call</code>.
+    </p>
     <h2 id="arguments">Arguments</h2>
-    <p>It&#39;s possible to pass arguments to smart contracts. To leverage this feature, use <a href="https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.get_named_arg.html">runtime::get_named_arg</a>.</p>
+    <p>
+      It&#39;s possible to pass arguments to smart contracts. To leverage this
+      feature, use
+      <a
+        href="https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.get_named_arg.html"
+        >runtime::get_named_arg</a
+      >.
+    </p>
     <pre><code class="lang-rust"><span class="hljs-keyword">use</span> casperlabs_contract::contract_api::runtime;
     
     <span class="hljs-meta">#[no_mangle]</span>
@@ -52,7 +79,28 @@ h4{
     }
     </code></pre>
     <h2 id="storage">Storage</h2>
-    <p>Saving and reading values to and from the blockchain is a manual process in Casper. It requires more code to be written, but also provides a lot of flexibility. The storage system works similarly to a file system in an operating system. Let&#39;s say we have a string <code>&quot;Hello Casper!&quot;</code> that needs to be saved. To do this, use the text editor, create a new file, paste the string in and save it under a name in some directory. The pattern is similar on the Casper blockchain. First you have to save your value to the memory using <a href="https://docs.rs/casper-contract/latest/casper_contract/contract_api/storage/fn.new_uref.html">storage::new_uref</a>. This returns a reference to the memory object that holds the <code>&quot;Hello Casper!&quot;</code> value. You could use this reference to update the value to something else. It&#39;s like a file. Secondly you have to save the reference under a human-readable string using <a href="https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.put_key.html">runtime::put_key</a>. It&#39;s like giving a name to the file. The following function implements this scenario:</p>
+    <p>
+      Saving and reading values to and from the blockchain is a manual process
+      in Casper. It requires more code to be written, but also provides a lot of
+      flexibility. The storage system works similarly to a file system in an
+      operating system. Let&#39;s say we have a string
+      <code>&quot;Hello Casper!&quot;</code> that needs to be saved. To do this,
+      use the text editor, create a new file, paste the string in and save it
+      under a name in some directory. The pattern is similar on the Casper
+      blockchain. First you have to save your value to the memory using
+      <a
+        href="https://docs.rs/casper-contract/latest/casper_contract/contract_api/storage/fn.new_uref.html"
+        >storage::new_uref</a
+      >. This returns a reference to the memory object that holds the
+      <code>&quot;Hello Casper!&quot;</code> value. You could use this reference
+      to update the value to something else. It&#39;s like a file. Secondly you
+      have to save the reference under a human-readable string using
+      <a
+        href="https://docs.rs/casper-contract/latest/casper_contract/contract_api/runtime/fn.put_key.html"
+        >runtime::put_key</a
+      >. It&#39;s like giving a name to the file. The following function
+      implements this scenario:
+    </p>
     <pre><code class="lang-rust">const KEY: &amp;str = <span class="hljs-string">"special_value"</span>;
     
     fn store(<span class="hljs-keyword">value</span>: String) {
@@ -66,9 +114,20 @@ h4{
         runtime::put<span class="hljs-number">_k</span>ey(KEY, <span class="hljs-keyword">value</span><span class="hljs-number">_k</span>ey);
     }
     </code></pre>
-    <p>After this function is executed, the context (Account or Smart Contract) will have the content of the <code>value</code> stored under <code>KEY</code> in its named keys space. The named keys space is a key-value storage that every context has. It&#39;s like a home directory.</p>
+    <p>
+      After this function is executed, the context (Account or Smart Contract)
+      will have the content of the <code>value</code> stored under
+      <code>KEY</code> in its named keys space. The named keys space is a
+      key-value storage that every context has. It&#39;s like a home directory.
+    </p>
     <h2 id="final-smart-contract">Final Smart Contract</h2>
-    <p>The code below is the simple contract generated by <a href="https://crates.io/crates/cargo-casper">cargo-casper</a> (found in <code>contract/src/main.rs</code> of a project created by the tool). It reads an argument and stores it in the memory under a key named <code>&quot;special_value&quot;</code>.</p>
+    <p>
+      The code below is the simple contract generated by
+      <a href="https://crates.io/crates/cargo-casper">cargo-casper</a> (found in
+      <code>contract/src/main.rs</code> of a project created by the tool). It
+      reads an argument and stores it in the memory under a key named
+      <code>&quot;special_value&quot;</code>.
+    </p>
     <pre><code class="lang-rust"><span class="hljs-meta">#![cfg_attr(
         not(target_arch = <span class="hljs-meta-string">"wasm32"</span>),
         crate_type = <span class="hljs-meta-string">"target arch should be wasm32"</span>
@@ -103,22 +162,54 @@ h4{
     }
     </code></pre>
     <h1 id="assemblyscript">AssemblyScript</h1>
-    <p>CasperLabs maintains the <a href="https://www.npmjs.com/package/casper-contract">casper-contract</a> to allow developers to create smart contracts using <a href="https://www.npmjs.com/package/assemblyscript">AssemblyScript</a>. The package source is hosted in the <a href="https://github.com/casper-network/casper-node/tree/master/smart_contracts/contract_as/assembly">main Casper Network repository</a>.</p>
+    <p>
+      CasperLabs maintains the
+      <a href="https://www.npmjs.com/package/casper-contract"
+        >casper-contract</a
+      >
+      to allow developers to create smart contracts using
+      <a href="https://www.npmjs.com/package/assemblyscript">AssemblyScript</a>.
+      The package source is hosted in the
+      <a
+        href="https://github.com/casper-network/casper-node/tree/master/smart_contracts/contract_as/assembly"
+        >main Casper Network repository</a
+      >.
+    </p>
     <h2 id="installation">Installation</h2>
-    <p>For each smart contract, it is necessary to create a project directory and initialize it.</p>
-    <p>The <code>npm init</code> process prompts for various details about the project. Answer as you see fit, but you may safely default everything except <code>name</code>, which needs to be specified. In this guide, we will refer to the contract name as <code>your-contract-name</code>.</p>
+    <p>
+      For each smart contract, it is necessary to create a project directory and
+      initialize it.
+    </p>
+    <p>
+      The <code>npm init</code> process prompts for various details about the
+      project. Answer as you see fit, but you may safely default everything
+      except <code>name</code>, which needs to be specified. In this guide, we
+      will refer to the contract name as <code>your-contract-name</code>.
+    </p>
     <pre><code class="lang-sh">mkdir <span class="hljs-keyword">project</span>
     cd <span class="hljs-keyword">project</span>
     npm init
     </code></pre>
-    <p>Then install AssemblyScript and this package in the project directory.</p>
+    <p>
+      Then install AssemblyScript and this package in the project directory.
+    </p>
     <pre><code class="lang-sh">npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save-dev assemblyscript@0.9.1</span>
     npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save casper-contract</span>
     </code></pre>
     <h2 id="contract-api-documentation">Contract API Documentation</h2>
-    <p>The Assemblyscript contract API documentation can be found at <a href="https://www.npmjs.com/package/casper-contract">https://www.npmjs.com/package/casper-contract</a>.</p>
+    <p>
+      The Assemblyscript contract API documentation can be found at
+      <a href="https://www.npmjs.com/package/casper-contract"
+        >https://www.npmjs.com/package/casper-contract</a
+      >.
+    </p>
     <h2 id="usage">Usage</h2>
-    <p>Add script entries for AssemblyScript to your project&#39;s <code>package.json</code>. Note that your contract name is used for the name of the WASM file. Replace <em>your-contract-name</em> with the name of your contract.</p>
+    <p>
+      Add script entries for AssemblyScript to your project&#39;s
+      <code>package.json</code>. Note that your contract name is used for the
+      name of the WASM file. Replace <em>your-contract-name</em> with the name
+      of your contract.
+    </p>
     <pre><code class="lang-json">{
       <span class="hljs-string">"name"</span>: <span class="hljs-string">"your-contract-name"</span>,
       ...
@@ -130,7 +221,11 @@ h4{
       ...
     }
     </code></pre>
-    <p>In the project root, create an <code>index.js</code> file with the following contents. Replace <em>your-contract-name</em> with the name of your contract.</p>
+    <p>
+      In the project root, create an <code>index.js</code> file with the
+      following contents. Replace <em>your-contract-name</em> with the name of
+      your contract.
+    </p>
     <pre><code class="lang-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>);
     
     <span class="hljs-keyword">const</span> compiled = <span class="hljs-keyword">new</span> WebAssembly.Module(fs.readFileSync(__dirname + <span class="hljs-string">"/dist/your-contract-name.wasm"</span>));
@@ -147,15 +242,26 @@ h4{
         <span class="hljs-attr">get</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">new</span> WebAssembly.Instance(compiled, imports).exports,
     });
     </code></pre>
-    <p>Next, create a directory called <code>assembly</code>, and in that directory, create a file called <code>tsconfig.json</code> in the following way:</p>
+    <p>
+      Next, create a directory called <code>assembly</code>, and in that
+      directory, create a file called <code>tsconfig.json</code> in the
+      following way:
+    </p>
     <pre><code class="lang-json">{
         <span class="hljs-attr">"extends"</span>: <span class="hljs-string">"../node_modules/assemblyscript/std/assembly.json"</span>,
         <span class="hljs-attr">"include"</span>: [<span class="hljs-string">"./**/*.ts"</span>]
     }
     </code></pre>
     <h2 id="sample-smart-contract">Sample smart contract</h2>
-    <p>In the <code>assembly</code> directory, also create an <code>index.ts</code> file, where the code for the contract needs to go.</p>
-    <p>You can use the following sample snippet, which demonstrates a simple smart contract that immediately returns an error and writes a message to a block when executed on the Casper Network.</p>
+    <p>
+      In the <code>assembly</code> directory, also create an
+      <code>index.ts</code> file, where the code for the contract needs to go.
+    </p>
+    <p>
+      You can use the following sample snippet, which demonstrates a simple
+      smart contract that immediately returns an error and writes a message to a
+      block when executed on the Casper Network.
+    </p>
     <pre><code class="lang-typescript"><span class="hljs-comment">//@ts-nocheck</span>
     <span class="hljs-keyword">import</span> { <span class="hljs-built_in">Error</span>, ErrorCode } <span class="hljs-keyword">from</span> <span class="hljs-string">"casper-contract/error"</span>;
     
@@ -165,12 +271,17 @@ h4{
     }
     </code></pre>
     <h2 id="deploy-the-contract">Deploy the Contract</h2>
-<p>Deploy is done by executing the previously created <code>execute_request</code> instance.</p>
-<pre><code class="lang-rust"><span class="hljs-selector-tag">builder</span><span class="hljs-selector-class">.exec</span>(<span class="hljs-selector-tag">execute_request</span>)<span class="hljs-selector-class">.expect_success</span>()<span class="hljs-selector-class">.commit</span>();
+    <p>
+      Deploy is done by executing the previously created
+      <code>execute_request</code> instance.
+    </p>
+    <pre><code class="lang-rust"><span class="hljs-selector-tag">builder</span><span class="hljs-selector-class">.exec</span>(<span class="hljs-selector-tag">execute_request</span>)<span class="hljs-selector-class">.expect_success</span>()<span class="hljs-selector-class">.commit</span>();
 </code></pre>
-<h2 id="post-assertion-to-confirm-deploy">Post-Assertion to Confirm Deploy</h2>
-<p>This will query the post-deploy value and assert for its change.</p>
-<pre><code class="lang-rust">  let result_of_query = builder
+    <h2 id="post-assertion-to-confirm-deploy">
+      Post-Assertion to Confirm Deploy
+    </h2>
+    <p>This will query the post-deploy value and assert for its change.</p>
+    <pre><code class="lang-rust">  let result_of_query = builder
 <span class="hljs-meta">            .query</span>(None, Key::Account(account_addr), &amp;[KEY.to_string()])
 <span class="hljs-meta">            .expect</span>(<span class="hljs-string">"should be stored value."</span>)
 <span class="hljs-meta">            .as_cl_value</span>()
@@ -179,8 +290,17 @@ h4{
 <span class="hljs-symbol">            .into_t:</span>:&lt;String&gt;()
 <span class="hljs-meta">            .expect</span>(<span class="hljs-string">"should be string."</span>)<span class="hljs-comment">;</span>
 </code></pre>
- <p>If you prefer a more complicated first contract, you can look at example contracts on the <a href="https://github.com/casper-ecosystem">Casper Ecosystem GitHub</a> repository for inspiration.</p>
-    <a href="https://docs.casperlabs.io/writing-contracts/" target="_blank">MORE ABOUT WRITING CONTRACT ON CASPER NETWORK</a>
-
-</body>
+    <p>
+      If you prefer a more complicated first contract, you can look at example
+      contracts on the
+      <a href="https://github.com/casper-ecosystem">Casper Ecosystem GitHub</a>
+      repository for inspiration.
+    </p>
+    <a href="https://docs.casperlabs.io/writing-contracts" target="_blank">
+      <button>MORE ABOUT WRITING CONTRACT ON CASPER NETWORK</button>
+    </a>
+    <a href="/quiz-5/index.html">
+      <button>Take Quiz</button>
+    </a>
+  </body>
 </html>
